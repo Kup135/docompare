@@ -1,7 +1,7 @@
 import openai
 import json
 from utils.config_loader import OPENAI_API_KEY
-from utils.parser import clean_and_parse_openai_json
+from utils.parser import clean_and_parse_openai_json, fallback_extract_dict_from_code
 
 openai.api_key = OPENAI_API_KEY
 
@@ -9,17 +9,22 @@ def generate_csv_extraction_code(csv_data, comparable_fields_json):
     csv_text = csv_data.to_csv(index=False)
 
     prompt = (
-        "You are an expert Python data analyst. Your job is to write code snippets "
-        "that extract values from a pandas DataFrame (`csv_data`) for a set of comparison fields.\n\n"
+        "You are an expert Python data analyst."
+        "Your task is to generate a JSON object that maps field names to one-line Python expressions "
+        "for extracting values from a pandas DataFrame called `csv_data`.\n\n"
         "Input:\n"
-        "- A CSV file as text (you can assume it has already been read into `csv_data` as a pandas DataFrame)\n"
-        "- A JSON object with a list of field names (keys) that describe the values to extract\n\n"
+        "- `csv_data`: A DataFrame (already loaded)\n"
+        "- A JSON object listing field names to extract\n\n"
         "Output:\n"
-        "Return a JSON object where each key is the field name, and the value is a one-line Python expression "
-        "that would extract the matching value from `csv_data`. "
-        "Use pandas filtering, indexing, or aggregation as needed.\n\n"
-        "Here is the field list:\n"
-        f"{json.dumps(comparable_fields_json, indent=2)}"
+        "Return ONLY a raw JSON object — **not a Python script**, **not inside triple backticks**, and with **no explanations**.\n"
+        "Each key in the JSON should be a field name, and each value should be a one-line expression "
+        "that extracts the value from `csv_data`.\n\n"
+        "Example (format only):\n"
+        "{\n"
+        '  "Room.Living.Area_m2": "csv_data.loc[csv_data[\'Room\'] == \'Living\', \'Area_m2\'].values[0]",\n'
+        '  "Room.Kitchen.Area_m2": "csv_data.loc[csv_data[\'Room\'] == \'Kitchen\', \'Area_m2\'].values[0]"\n'
+        "}\n\n"
+        f"Here is the field list:\n{json.dumps(comparable_fields_json, indent=2)}"
     )
 
     response = openai.chat.completions.create(
@@ -33,4 +38,8 @@ def generate_csv_extraction_code(csv_data, comparable_fields_json):
     )
 
     raw_response = response.choices[0].message.content
-    return clean_and_parse_openai_json(raw_response)
+    parsed = clean_and_parse_openai_json(raw_response)
+    if parsed is None:
+        print("⚠️ Trying fallback parsing...")
+        parsed = fallback_extract_dict_from_code(raw_response)
+    return parsed

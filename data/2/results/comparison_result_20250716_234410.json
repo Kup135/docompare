@@ -1,0 +1,31 @@
+{
+  "comparable_fields": {
+    "Room.Living.Area_m2": {
+      "csv_value": 20,
+      "image_value": 20,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Room.Kitchen.Area_m2": {
+      "csv_value": 12,
+      "image_value": 12,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Room.Bedroom.Area_m2": {
+      "csv_value": 18,
+      "image_value": 16,
+      "diff": 2.0,
+      "is_within_tolerance": false
+    },
+    "Room.Bathroom.Area_m2": {
+      "csv_value": 5,
+      "image_value": 4,
+      "diff": 1.0,
+      "is_within_tolerance": true
+    }
+  },
+  "flag": "pass",
+  "criteria_used": "average_diff_below_tolerance",
+  "tolerance": 1
+}

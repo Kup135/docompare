@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Docompare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .glass {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-cover bg-center bg-no-repeat text-white font-sans antialiased">
+
+  <!-- Dark overlay for better contrast -->
+  <div class="absolute inset-0 bg-black/60 z-0"></div>
+
+  <div class="min-h-screen flex items-center justify-center px-4 relative z-10">
+    <div class="glass rounded-3xl shadow-xl p-10 max-w-lg w-full text-white relative z-10">
+      <h1 class="text-3xl font-bold text-center mb-6">📐 Docompare</h1>
+      <p class="text-center text-gray-200 mb-8">Visual + Tabular Document Comparison</p>
+
+      <form id="configForm" class="space-y-5">
+        <div>
+          <label for="dataDir" class="block text-sm font-medium text-gray-200">📁 Data Directory</label>
+          <input type="text" id="dataDir" name="dataDir" value="data/1"
+            class="mt-1 w-full rounded-xl border border-gray-300 bg-white/20 px-4 py-2 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-grey-300" />
+        </div>
+
+        <div>
+          <label for="criteria" class="block text-sm font-medium text-gray-200">🧪 Comparison Criteria</label>
+          <select id="criteria" name="criteria"
+            class="mt-1 w-full rounded-xl border border-gray-300 bg-white/20 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-grey-300">
+            <option value="all_fields_within_tolerance">All fields within tolerance</option>
+            <option value="average_diff_below_tolerance">Average diff within tolerance</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tolerance" class="block text-sm font-medium text-gray-200">🎯 Tolerance</label>
+          <input type="number" id="tolerance" name="tolerance" value="1.0" step="0.1"
+            class="mt-1 w-full rounded-xl border border-gray-300 bg-white/20 px-4 py-2 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-grey-300" />
+        </div>
+
+        <button type="submit"
+            class="w-full bg-gray-500 hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-xl transition duration-200">
+            🚀 Run Comparison
+        </button>
+
+      </form>
+      <div id="loadingSpinner" class="mt-6 flex items-center justify-center hidden">
+        <svg class="animate-spin h-6 w-6 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+        </svg>
+        <span class="ml-3 text-gray-200">Cooking...</span>
+      </div>
+      <div id="resultContainer" class="mt-8 hidden">
+        <div id="statusBadge" class="mb-4 text-lg font-semibold hidden">
+            <!-- dynamically filled in JS -->
+        </div>
+        <div id="failTableContainer" class="mt-4">
+        <h3 class="text-md font-semibold text-gray-100 mb-2">Failed Fields:</h3>
+            <div class="overflow-x-auto rounded-lg">
+                <table class="min-w-full text-sm bg-black/30 text-white">
+                    <thead>
+                    <tr class="bg-grey-900 text-grey-100">
+                        <th class="text-left px-4 py-2">Field</th>
+                        <th class="text-left px-4 py-2">CSV Value</th>
+                        <th class="text-left px-4 py-2">Image Value</th>
+                        <th class="text-left px-4 py-2">Diff</th>
+                    </tr>
+                    </thead>
+                    <tbody id="failTableBody"></tbody>
+                </table>
+            </div>
+        <br>
+        <h2 class="text-md font-semibold text-gray-100 mb-2">🧾 Results:</h2>
+        </div>
+        <!-- hidden JSON viewer -->
+        <pre id="result" class="hidden"></pre>
+        <!-- optional download -->
+        <a id="downloadLink" href="#" download="comparison_result.json" class="mt-4 inline-block text-grey-300 underline hidden">
+        📄 Download Full JSON
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const backgrounds = [
+      "background1.jpg",
+      "background2.jpg",
+      "background3.jpg",
+      "background4.jpg"
+    ];
+
+    const pick = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    const path = `/assets/background/${pick}`;
+
+    const preload = new Image();
+    preload.src = path;
+    preload.onload = () => {
+      document.body.style.backgroundImage = `url('${path}')`;
+    };
+  </script>
+
+  <script>
+    document.getElementById("configForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+    document.getElementById("loadingSpinner").classList.remove("hidden");
+    document.getElementById("resultContainer").classList.add("hidden");
+
+    const config = {
+        data_dir: document.getElementById("dataDir").value,
+        pass_criteria: document.getElementById("criteria").value,
+        tolerance: parseFloat(document.getElementById("tolerance").value),
+        output_subdir: "results"
+    };
+
+    const res = await fetch("/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config)
+    });
+
+    const data = await res.json();
+        const statusEl = document.getElementById("statusBadge");
+        if (data.flag === "pass") {
+        statusEl.textContent = "✅ PASS";
+        statusEl.className = "mb-4 text-lg font-semibold text-green-400";
+        } else if (data.flag === "fail") {
+        statusEl.textContent = "❌ FAIL";
+        statusEl.className = "mb-4 text-lg font-semibold text-red-400";
+        } else {
+        statusEl.textContent = "⚠️ Unknown";
+        statusEl.className = "mb-4 text-lg font-semibold text-yellow-400";
+        }
+        statusEl.classList.remove("hidden");
+    
+    const failedFields = [];
+    const fields = data.comparable_fields || {};
+    for (const [field, values] of Object.entries(fields)) {
+        if (values.is_within_tolerance === false) {
+            failedFields.push({
+            field,
+            csv: values.csv_value,
+            image: values.image_value,
+            diff: values.diff
+            });
+        }
+        }
+    // Populate fail table
+    const tableBody = document.getElementById("failTableBody");
+    
+    tableBody.innerHTML = ""; // Clear previous rows
+    if (failedFields.length > 0) {
+        failedFields.forEach(row => {
+            const displayName = row.field.length > 30
+                ? "…" + row.field.slice(-30)
+                : row.field;
+
+            tableBody.innerHTML += `
+            <tr class="border-t border-white/10">
+                <td class="px-4 py-2" title="${row.field}">${displayName}</td>
+                <td class="px-4 py-2">${row.csv}</td>
+                <td class="px-4 py-2">${row.image}</td>
+                <td class="px-4 py-2 text-red-400 font-semibold">${row.diff}</td>
+            </tr>`;
+        });
+    } else {
+        tableBody.innerHTML = `<tr><td class="px-4 py-2 text-green-400" colspan="4">🎉 No failures found</td></tr>`;
+    }
+    // document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+    const resultEl = document.getElementById("result");
+    const highlighted = JSON.stringify(data, null, 2).replace(
+    /"is_within_tolerance": false/g,
+    '"is_within_tolerance": <span class="text-red-400 font-semibold">false</span>'
+    );
+    // Generate downloadable blob
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.getElementById("downloadLink");
+    link.href = url;
+    link.classList.remove("hidden");
+
+    resultEl.innerHTML = highlighted;
+    document.getElementById("loadingSpinner").classList.add("hidden");
+    document.getElementById("resultContainer").classList.remove("hidden");
+    });
+
+  </script>
+
+</body>
+</html>

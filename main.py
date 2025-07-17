@@ -39,6 +39,8 @@ def main():
 
     # Generate code snippets
     code_snippets = generate_csv_extraction_code(loaded_files["csv_data"], comparable_fields)
+    if code_snippets is None:
+        raise ValueError("❌ Agent 2 returned invalid JSON. Cannot continue.")
     print("DEBUG: Generated code per field:", code_snippets)
 
     # Run expressions and get new structured CSV

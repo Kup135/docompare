@@ -1,0 +1,67 @@
+{
+  "comparable_fields": {
+    "Phase.Envelope.BudgetTotalUSD": {
+      "csv_value": 111882,
+      "image_value": 111882,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.Envelope.ActualTotalUSD": {
+      "csv_value": 93930,
+      "image_value": 93937,
+      "diff": 7.0,
+      "is_within_tolerance": false
+    },
+    "Phase.Finishing.BudgetTotalUSD": {
+      "csv_value": 155361,
+      "image_value": 155361,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.Finishing.ActualTotalUSD": {
+      "csv_value": 127205,
+      "image_value": 127205,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.Foundation.BudgetTotalUSD": {
+      "csv_value": 144510,
+      "image_value": 144510,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.Foundation.ActualTotalUSD": {
+      "csv_value": 144129,
+      "image_value": 144129,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.MEP.BudgetTotalUSD": {
+      "csv_value": 184708,
+      "image_value": 197787,
+      "diff": 13079.0,
+      "is_within_tolerance": false
+    },
+    "Phase.MEP.ActualTotalUSD": {
+      "csv_value": 112838,
+      "image_value": 112838,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    },
+    "Phase.Structural.BudgetTotalUSD": {
+      "csv_value": 110180,
+      "image_value": 110186,
+      "diff": 6.0,
+      "is_within_tolerance": false
+    },
+    "Phase.Structural.ActualTotalUSD": {
+      "csv_value": 100632,
+      "image_value": 100632,
+      "diff": 0.0,
+      "is_within_tolerance": true
+    }
+  },
+  "flag": "fail",
+  "criteria_used": "all_fields_within_tolerance",
+  "tolerance": 1
+}

@@ -16,3 +16,7 @@ __pycache__/
 
 # assignment
 HomeAssignment.pdf
+
+# ignore cache and results 
+**/results/
+**/cache/

@@ -30,7 +30,13 @@
     <div class="glass rounded-3xl shadow-xl p-10 max-w-lg w-full text-white relative z-10">
       <h1 class="text-3xl font-bold text-center mb-6">📐 Docompare</h1>
       <p class="text-center text-gray-200 mb-8">Visual + Tabular Document Comparison</p>
-
+        <div>
+            <label class="inline-flex items-center">
+                <input type="checkbox" id="clearCache" name="clearCache" class="form-checkbox text-blue-500" />
+                <span class="ml-2 text-sm text-gray-200">Clear Cache - Start Fresh</span>
+            </label>
+        </div>
+        <br>
       <form id="configForm" class="space-y-5">
         <div>
           <label for="dataDir" class="block text-sm font-medium text-gray-200">📁 Data Directory</label>
@@ -128,7 +134,8 @@
         data_dir: document.getElementById("dataDir").value,
         pass_criteria: document.getElementById("criteria").value,
         tolerance: parseFloat(document.getElementById("tolerance").value),
-        output_subdir: "results"
+        output_subdir: "results",
+        clearCache: document.getElementById("clearCache").checked
     };
 
     const res = await fetch("/run", {

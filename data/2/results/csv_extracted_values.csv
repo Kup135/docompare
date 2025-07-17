@@ -1,0 +1,5 @@
+field,csv_value
+Room: Living -> Area_m2,20
+Room: Kitchen -> Area_m2,12
+Room: Bedroom -> Area_m2,18
+Room: Bathroom -> Area_m2,5

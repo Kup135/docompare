@@ -1,0 +1,4 @@
+tolerance: 100.0 # max absolute diff allowed per field
+pass_criteria: all_fields_within_tolerance  # OR 'average_diff_within_tolerance'
+output_subdir: results
+data_dir: data/1

@@ -13,3 +13,6 @@ venv/
 # __pycache__ and compiled files
 __pycache__/
 *.pyc
+
+# assignment
+Data science - Home Assignment.pdf

@@ -1,3 +1,4 @@
+import sys
 from flask import Flask, request, jsonify, send_from_directory
 import os
 import yaml
@@ -16,12 +17,21 @@ def run_comparison():
     with open("config/config.yaml", "w") as f:
         yaml.dump(config, f)
 
-    result_path = main()
-    with open(result_path, "r", encoding="utf-8") as f:
-        data = f.read()
+    result = main()
 
-    return jsonify(yaml.safe_load(data))
+    if isinstance(result, dict) and result.get("flag") == "error":
+        print(f"⚠️ Main error: {result['error_message']}")
+        return jsonify(result), 400
+    
+    try:
+        with open(result, "r", encoding="utf-8") as f:
+            data = f.read()
+        return jsonify(yaml.safe_load(data))
+    except Exception as e:
+        print(f"❌ Failed to read result file: {e}")
+        return jsonify({"flag": "error", "error_message": str(e)}), 500
 
 if __name__ == "__main__":
     print("Starting Flask server...")
-    app.run(debug=True)
+    port = int(sys.argv[-1]) if "--port" in sys.argv else 5000
+    app.run(debug=True, host="0.0.0.0", port=port)

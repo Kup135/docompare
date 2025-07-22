@@ -1,0 +1,11 @@
+field,gt_csv,pred_csv,csv_within_tolerance,csv_abs_error,gt_img,pred_img,img_within_tolerance,img_abs_error
+Phase:Envelope:BudgetTotalUSD,111882,111882,True,0,111882,111882,True,0
+Phase:Envelope:ActualTotalUSD,93930,93930,True,0,93937,93937,True,0
+Phase:Finishing:BudgetTotalUSD,155361,155361,True,0,155361,155361,True,0
+Phase:Finishing:ActualTotalUSD,127205,127205,True,0,127205,127205,True,0
+Phase:Foundation:BudgetTotalUSD,144510,144510,True,0,144510,144510,True,0
+Phase:Foundation:ActualTotalUSD,144129,144129,True,0,144129,144129,True,0
+Phase:MEP:BudgetTotalUSD,184708,184708,True,0,197787,197787,True,0
+Phase:MEP:ActualTotalUSD,112838,112838,True,0,112838,112838,True,0
+Phase:Structural:BudgetTotalUSD,110180,110180,True,0,110186,110186,True,0
+Phase:Structural:ActualTotalUSD,100632,100632,True,0,100632,100632,True,0

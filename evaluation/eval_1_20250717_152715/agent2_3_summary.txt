@@ -1,0 +1,4 @@
+agent2_accuracy: 1.000
+agent2_mae: 0.000
+agent3_accuracy: 1.000
+agent3_mae: 0.000

@@ -1,0 +1,110 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="white"/>
+  
+  <!-- Building outline -->
+  <rect x="50" y="50" width="700" height="500" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Rooms -->
+  <!-- Mechanical Room -->
+  <rect x="50" y="50" width="200" height="200" fill="#f0f0f0" stroke="black" stroke-width="1"/>
+  <text x="150" y="150" text-anchor="middle" font-size="14" font-weight="bold">MECHANICAL ROOM</text>
+  
+  <!-- Office Area 1 -->
+  <rect x="250" y="50" width="250" height="200" fill="#e8f4f8" stroke="black" stroke-width="1"/>
+  <text x="375" y="150" text-anchor="middle" font-size="14">OFFICE AREA 1</text>
+  
+  <!-- Office Area 2 -->
+  <rect x="500" y="50" width="250" height="200" fill="#e8f4f8" stroke="black" stroke-width="1"/>
+  <text x="625" y="150" text-anchor="middle" font-size="14">OFFICE AREA 2</text>
+  
+  <!-- Conference Room -->
+  <rect x="50" y="250" width="200" height="150" fill="#f8e8e8" stroke="black" stroke-width="1"/>
+  <text x="150" y="325" text-anchor="middle" font-size="14">CONFERENCE</text>
+  
+  <!-- Open Office -->
+  <rect x="250" y="250" width="500" height="150" fill="#e8f8e8" stroke="black" stroke-width="1"/>
+  <text x="500" y="325" text-anchor="middle" font-size="14">OPEN OFFICE</text>
+  
+  <!-- Server Room -->
+  <rect x="50" y="400" width="200" height="150" fill="#f8f0e8" stroke="black" stroke-width="1"/>
+  <text x="150" y="475" text-anchor="middle" font-size="14">SERVER ROOM</text>
+  
+  <!-- Break Room -->
+  <rect x="250" y="400" width="250" height="150" fill="#e8e8f8" stroke="black" stroke-width="1"/>
+  <text x="375" y="475" text-anchor="middle" font-size="14">BREAK ROOM</text>
+  
+  <!-- Storage -->
+  <rect x="500" y="400" width="250" height="150" fill="#f0f0f0" stroke="black" stroke-width="1"/>
+  <text x="625" y="475" text-anchor="middle" font-size="14">STORAGE</text>
+  
+  <!-- HVAC Equipment -->
+  <!-- RTU-1 -->
+  <rect x="80" y="80" width="60" height="40" fill="#4169E1" stroke="black" stroke-width="2"/>
+  <text x="110" y="105" text-anchor="middle" font-size="12" fill="white" font-weight="bold">RTU-1</text>
+  <text x="110" y="135" text-anchor="middle" font-size="10">15 Ton</text>
+  
+  <!-- RTU-2 -->
+  <rect x="160" y="80" width="60" height="40" fill="#4169E1" stroke="black" stroke-width="2"/>
+  <text x="190" y="105" text-anchor="middle" font-size="12" fill="white" font-weight="bold">RTU-2</text>
+  <text x="190" y="135" text-anchor="middle" font-size="10">15 Ton</text>
+  
+  <!-- VAV Boxes -->
+  <!-- VAV-1 -->
+  <circle cx="375" cy="100" r="20" fill="#FF6347" stroke="black" stroke-width="2"/>
+  <text x="375" y="105" text-anchor="middle" font-size="10" font-weight="bold">VAV-1</text>
+  <text x="375" y="130" text-anchor="middle" font-size="8">800 CFM</text>
+  
+  <!-- VAV-2 -->
+  <circle cx="625" cy="100" r="20" fill="#FF6347" stroke="black" stroke-width="2"/>
+  <text x="625" y="105" text-anchor="middle" font-size="10" font-weight="bold">VAV-2</text>
+  <text x="625" y="130" text-anchor="middle" font-size="8">800 CFM</text>
+  
+  <!-- VAV-3 -->
+  <circle cx="150" cy="300" r="20" fill="#FF6347" stroke="black" stroke-width="2"/>
+  <text x="150" y="305" text-anchor="middle" font-size="10" font-weight="bold">VAV-3</text>
+  <text x="150" y="325" text-anchor="middle" font-size="8">600 CFM</text>
+  
+  <!-- VAV-4 -->
+  <circle cx="500" cy="300" r="20" fill="#FF6347" stroke="black" stroke-width="2"/>
+  <text x="500" y="305" text-anchor="middle" font-size="10" font-weight="bold">VAV-4</text>
+  <text x="500" y="310" text-anchor="middle" font-size="8">1200 CFM</text>
+  
+  <!-- CRAC Unit -->
+  <rect x="80" y="430" width="80" height="60" fill="#32CD32" stroke="black" stroke-width="2"/>
+  <text x="120" y="465" text-anchor="middle" font-size="12" font-weight="bold">CRAC-1</text>
+  <text x="120" y="480" text-anchor="middle" font-size="10">10 Ton</text>
+  
+  <!-- EF-1 -->
+  <rect x="375" y="430" width="40" height="40" fill="#FFD700" stroke="black" stroke-width="2"/>
+  <text x="395" y="455" text-anchor="middle" font-size="10" font-weight="bold">EF-1</text>
+  <text x="395" y="490" text-anchor="middle" font-size="8">500 CFM</text>
+  
+  <!-- Ductwork (simplified) -->
+  <line x1="140" y1="100" x2="375" y2="100" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="220" y1="100" x2="625" y2="100" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="110" y1="120" x2="110" y2="300" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="110" y1="300" x2="150" y2="300" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="190" y1="120" x2="190" y2="200" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="190" y1="200" x2="500" y2="200" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <line x1="500" y1="200" x2="500" y2="280" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold">HVAC EQUIPMENT LAYOUT - FLOOR 3</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="570" width="30" height="20" fill="#4169E1" stroke="black"/>
+  <text x="85" y="585" font-size="12">Rooftop Unit</text>
+  
+  <circle cx="180" cy="580" r="10" fill="#FF6347" stroke="black"/>
+  <text x="195" y="585" font-size="12">VAV Box</text>
+  
+  <rect x="280" y="570" width="30" height="20" fill="#32CD32" stroke="black"/>
+  <text x="315" y="585" font-size="12">CRAC Unit</text>
+  
+  <rect x="410" y="570" width="30" height="20" fill="#FFD700" stroke="black"/>
+  <text x="445" y="585" font-size="12">Exhaust Fan</text>
+  
+  <line x1="550" y1="580" x2="580" y2="580" stroke="#666" stroke-width="4" stroke-dasharray="5,5"/>
+  <text x="585" y="585" font-size="12">Ductwork</text>
+</svg>

@@ -1,0 +1,17 @@
+CircuitNumber,Description,BreakerSize_A,Poles,Voltage,Wire_AWG,Load_kW,LoadType,Room_Area,Notes
+1,Lighting - North Wing,20,1,277,12,2.5,Continuous,North Wing,LED Fixtures
+2,Lighting - East Wing,20,1,277,12,2.5,Continuous,East Wing,LED Fixtures
+3,Lighting - South Wing,20,1,277,12,2.5,Continuous,South Wing,LED Fixtures
+4,Lighting - West Wing,20,1,277,12,2.5,Continuous,West Wing,LED Fixtures
+5,Receptacles - Office 101-105,20,1,120,12,1.8,Non-Continuous,Office 101-105,General Purpose
+6,Emergency Lighting,15,1,277,14,1.2,Continuous,All Areas,Battery Backup
+7,Receptacles - Office 106-110,20,1,120,12,1.8,Non-Continuous,Office 106-110,General Purpose
+8,Conference Room,20,1,120,12,2.0,Non-Continuous,Conference,AV Equipment
+9-11-13,HVAC Unit RTU-1,30,3,480,10,18.5,Continuous,Roof,15 Ton Unit
+10-12-14,HVAC Unit RTU-2,30,3,480,10,18.5,Continuous,Roof,15 Ton Unit
+15,Server Room Receptacles,30,1,120,10,3.5,Continuous,Server Room,Dedicated Circuits
+16,Break Room Appliances,20,1,120,12,2.4,Non-Continuous,Break Room,Microwave/Coffee
+17,SPARE,20,1,120,12,0,None,N/A,Future Use
+18,SPARE,20,1,120,12,0,None,N/A,Future Use
+19-21,Electric Water Heater,40,2,240,8,9.6,Non-Continuous,Mechanical,50 Gallon
+20-22,Elevator Motor,50,2,480,6,15.0,Non-Continuous,Elevator Shaft,Hydraulic

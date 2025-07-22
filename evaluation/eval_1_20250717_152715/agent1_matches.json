@@ -1,0 +1,12 @@
+{
+  "Phase:Envelope:BudgetTotalUSD": "Envelope_BudgetTotal",
+  "Phase:Envelope:ActualTotalUSD": "Envelope_ActualTotal",
+  "Phase:Finishing:BudgetTotalUSD": "Finishing_BudgetTotal",
+  "Phase:Finishing:ActualTotalUSD": "Finishing_ActualTotal",
+  "Phase:Foundation:BudgetTotalUSD": "Foundation_BudgetTotal",
+  "Phase:Foundation:ActualTotalUSD": "Foundation_ActualTotal",
+  "Phase:MEP:BudgetTotalUSD": "MEP_BudgetTotal",
+  "Phase:MEP:ActualTotalUSD": "MEP_ActualTotal",
+  "Phase:Structural:BudgetTotalUSD": "Structural_BudgetTotal",
+  "Phase:Structural:ActualTotalUSD": "Structural_ActualTotal"
+}

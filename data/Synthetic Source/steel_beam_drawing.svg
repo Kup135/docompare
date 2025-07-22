@@ -1,0 +1,82 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid lines -->
+  <defs>
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="white"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  
+  <!-- Column grid labels -->
+  <text x="100" y="30" text-anchor="middle" font-size="20" font-weight="bold">A</text>
+  <text x="300" y="30" text-anchor="middle" font-size="20" font-weight="bold">B</text>
+  <text x="500" y="30" text-anchor="middle" font-size="20" font-weight="bold">C</text>
+  <text x="700" y="30" text-anchor="middle" font-size="20" font-weight="bold">D</text>
+  
+  <!-- Row grid labels -->
+  <text x="30" y="105" text-anchor="middle" font-size="20" font-weight="bold">1</text>
+  <text x="30" y="305" text-anchor="middle" font-size="20" font-weight="bold">2</text>
+  <text x="30" y="505" text-anchor="middle" font-size="20" font-weight="bold">3</text>
+  
+  <!-- Columns -->
+  <rect x="90" y="90" width="20" height="420" fill="#666" stroke="black" stroke-width="2"/>
+  <rect x="290" y="90" width="20" height="420" fill="#666" stroke="black" stroke-width="2"/>
+  <rect x="490" y="90" width="20" height="420" fill="#666" stroke="black" stroke-width="2"/>
+  <rect x="690" y="90" width="20" height="420" fill="#666" stroke="black" stroke-width="2"/>
+  
+  <!-- Beams with labels -->
+  <!-- B1: A-B -->
+  <rect x="110" y="95" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="200" y="85" text-anchor="middle" font-size="14">B1: W24x76</text>
+  <text x="200" y="70" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B2: B-C -->
+  <rect x="310" y="95" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="400" y="85" text-anchor="middle" font-size="14">B2: W24x76</text>
+  <text x="400" y="70" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B3: C-D -->
+  <rect x="510" y="95" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="600" y="85" text-anchor="middle" font-size="14">B3: W21x68</text>
+  <text x="600" y="70" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B4: A-B (Row 2) -->
+  <rect x="110" y="295" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="200" y="285" text-anchor="middle" font-size="14">B4: W21x68</text>
+  <text x="200" y="270" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B5: B-C (Row 2) -->
+  <rect x="310" y="295" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="400" y="285" text-anchor="middle" font-size="14">B5: W21x68</text>
+  <text x="400" y="270" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B6: C-D (Row 2) -->
+  <rect x="510" y="295" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="600" y="285" text-anchor="middle" font-size="14">B6: W18x50</text>
+  <text x="600" y="270" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B7: A-B (Row 3) -->
+  <rect x="110" y="495" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="200" y="485" text-anchor="middle" font-size="14">B7: W18x50</text>
+  <text x="200" y="470" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B8: B-C (Row 3) -->
+  <rect x="310" y="495" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="400" y="485" text-anchor="middle" font-size="14">B8: W18x50</text>
+  <text x="400" y="470" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- B9: C-D (Row 3) -->
+  <rect x="510" y="495" width="180" height="10" fill="#8B4513" stroke="black" stroke-width="2"/>
+  <text x="600" y="485" text-anchor="middle" font-size="14">B9: W16x40</text>
+  <text x="600" y="470" text-anchor="middle" font-size="12">L=6.0m</text>
+  
+  <!-- Title -->
+  <text x="400" y="560" text-anchor="middle" font-size="20" font-weight="bold">STRUCTURAL STEEL FRAMING PLAN - LEVEL 2</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="540" width="15" height="15" fill="#8B4513" stroke="black"/>
+  <text x="70" y="552" font-size="12">Steel Beam</text>
+  <rect x="50" y="560" width="15" height="15" fill="#666" stroke="black"/>
+  <text x="70" y="572" font-size="12">Column</text>
+</svg>

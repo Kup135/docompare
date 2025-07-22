@@ -1,0 +1,7 @@
+{
+  "data_dir": "data/1",
+  "pass_criteria": "all_fields_within_tolerance",
+  "tolerance": 1500.0,
+  "output_subdir": "results",
+  "clearCache": true
+}

@@ -38,27 +38,34 @@ def generate_comparable_fields(csv_data, image_data):
     "Think carefully about the structure in both files. Identify if there are repeated patterns, categories, or sections that can be aligned." \
     )
 
-    response = openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant for comparing document contents."},
-            {"role": "user", "content": prompt},
-            {"role": "user", "content": "Here is the CSV:"},
-            {"role": "user", "content": csv_text},
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Here is the image file:"},
-                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encoded_image}"}}
-                ]
-            }
-        ],
-        temperature=0.2
-    )
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant for comparing document contents."},
+                {"role": "user", "content": prompt},
+                {"role": "user", "content": "Here is the CSV:"},
+                {"role": "user", "content": csv_text},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Here is the image file:"},
+                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encoded_image}"}}
+                    ]
+                }
+            ],
+            temperature=0.2
+        )
+    except openai.error.OpenAIError as e:
+        raise RuntimeError(f"OpenAI API call failed in Agent 1: {e}")
+
 
     raw_response = response.choices[0].message.content
     print("DEBUG: OpenAI response:\n", raw_response)
     clean_response = clean_and_parse_openai_json(raw_response)
     print("DEBUG: clean response:", (clean_response))
+
+    if not clean_response:
+        raise ValueError("Agent 1 returned invalid or unparsable JSON.")
 
     return clean_response

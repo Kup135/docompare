@@ -7,7 +7,8 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Load YAML
-def load_config(path="config/config.yaml"):
+def load_config(path=None):
+    path = path or os.environ.get("CONFIG_PATH", "config/config.yaml")
     with open(path, "r") as f:
         return yaml.safe_load(f)
 

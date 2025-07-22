@@ -1,0 +1,11 @@
+EquipmentID,EquipmentType,Location,Capacity,AirFlow_CFM,PowerReq_kW,Voltage,Weight_kg,ServedArea,MaintenanceFreq
+RTU-1,Rooftop Unit,Mechanical Room,15 Ton,5400,18.5,480V,680,Office Area 1,Quarterly
+RTU-2,Rooftop Unit,Mechanical Room,15 Ton,5400,18.5,480V,680,Office Area 2,Quarterly
+VAV-1,VAV Box w/ Reheat,Office Area 1,800 CFM,800,2.0,120V,35,Zone 1,Semi-Annual
+VAV-2,VAV Box w/ Reheat,Office Area 2,800 CFM,800,2.0,120V,35,Zone 2,Semi-Annual
+VAV-3,VAV Box w/ Reheat,Conference,600 CFM,600,1.5,120V,30,Conference,Semi-Annual
+VAV-4,VAV Box,Open Office,1200 CFM,1200,0.5,120V,40,Open Office,Semi-Annual
+CRAC-1,Computer Room AC,Server Room,10 Ton,3500,12.0,480V,450,Server Room,Monthly
+EF-1,Exhaust Fan,Break Room,500 CFM,500,0.75,120V,25,Break Room,Annual
+HRV-1,Heat Recovery Vent,Mechanical Room,1000 CFM,1000,2.5,240V,120,Building,Quarterly
+MAU-1,Makeup Air Unit,Storage,2000 CFM,2000,5.0,480V,250,Storage,Quarterly

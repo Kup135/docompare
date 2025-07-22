@@ -20,21 +20,29 @@ def fill_image_values(agent2_output_json, image_data):
         f"Here is the JSON structure:\n{json.dumps(agent2_output_json, indent=2)}"
     )
 
-    response = openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You extract numeric or categorical values from images into structured JSON."},
-            {"role": "user", "content": prompt},
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Here is the image file:"},
-                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encoded_image}"}}
-                ]
-            }
-        ],
-        temperature=0.2
-    )
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You extract numeric or categorical values from images into structured JSON."},
+                {"role": "user", "content": prompt},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Here is the image file:"},
+                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encoded_image}"}}
+                    ]
+                }
+            ],
+            temperature=0.2
+        )
+    except openai.error.OpenAIError as e:
+        raise RuntimeError(f"OpenAI API call failed in Agent 3: {e}")
 
     raw_response = response.choices[0].message.content
-    return clean_and_parse_openai_json(raw_response)
+    clean_response = clean_and_parse_openai_json(raw_response)
+
+    if not clean_response:
+        raise ValueError("Agent 3 returned invalid or unparsable JSON.")
+    
+    return clean_response

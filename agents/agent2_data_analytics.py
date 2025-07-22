@@ -27,19 +27,26 @@ def generate_csv_extraction_code(csv_data, comparable_fields_json):
         f"Here is the field list:\n{json.dumps(comparable_fields_json, indent=2)}"
     )
 
-    response = openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You generate Python code to extract specific values from a pandas DataFrame."},
-            {"role": "user", "content": prompt},
-            {"role": "user", "content": f"Here is the CSV data:\n{csv_text}"}
-        ],
-        temperature=0.2
-    )
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You generate Python code to extract specific values from a pandas DataFrame."},
+                {"role": "user", "content": prompt},
+                {"role": "user", "content": f"Here is the CSV data:\n{csv_text}"}
+            ],
+            temperature=0.2
+        )
+    except openai.error.OpenAIError as e:
+        raise RuntimeError(f"OpenAI API call failed in Agent 2: {e}")
 
     raw_response = response.choices[0].message.content
     parsed = clean_and_parse_openai_json(raw_response)
     if parsed is None:
         print("⚠️ Trying fallback parsing...")
         parsed = fallback_extract_dict_from_code(raw_response)
+    
+    if parsed is None:
+        raise ValueError("Agent 2 returned invalid or unparsable JSON.")
+
     return parsed

@@ -12,6 +12,10 @@
     }
     body {
       font-family: 'Inter', sans-serif;
+      background-color: #000; /* fallback */
+      background-size: cover;       
+      background-repeat: no-repeat;
+      background-position: center;
     }
     .glass {
       backdrop-filter: blur(16px) saturate(180%);
@@ -21,10 +25,11 @@
     }
   </style>
 </head>
-<body class="bg-cover bg-center bg-no-repeat text-white font-sans antialiased">
+<body class="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed text-white font-sans antialiased">
+
 
   <!-- Dark overlay for better contrast -->
-  <div class="absolute inset-0 bg-black/60 z-0"></div>
+  <div class="fixed inset-0 w-screen h-screen bg-black/70 z-0 pointer-events-none"></div>
 
   <div class="min-h-screen flex items-center justify-center px-4 relative z-10">
     <div class="glass rounded-3xl shadow-xl p-10 max-w-lg w-full text-white relative z-10">
@@ -127,87 +132,111 @@
     document.getElementById("configForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-    document.getElementById("loadingSpinner").classList.remove("hidden");
-    document.getElementById("resultContainer").classList.add("hidden");
+  document.getElementById("loadingSpinner").classList.remove("hidden");
+  document.getElementById("resultContainer").classList.add("hidden");
 
-    const config = {
-        data_dir: document.getElementById("dataDir").value,
-        pass_criteria: document.getElementById("criteria").value,
-        tolerance: parseFloat(document.getElementById("tolerance").value),
-        output_subdir: "results",
-        clearCache: document.getElementById("clearCache").checked
-    };
+  const config = {
+    data_dir: document.getElementById("dataDir").value,
+    pass_criteria: document.getElementById("criteria").value,
+    tolerance: parseFloat(document.getElementById("tolerance").value),
+    output_subdir: "results",
+    clearCache: document.getElementById("clearCache").checked
+  };
 
+  let data;
+  const statusEl = document.getElementById("statusBadge");
+
+  try {
     const res = await fetch("/run", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(config)
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(config)
     });
 
-    const data = await res.json();
-        const statusEl = document.getElementById("statusBadge");
-        if (data.flag === "pass") {
-        statusEl.textContent = "✅ PASS";
-        statusEl.className = "mb-4 text-lg font-semibold text-green-400";
-        } else if (data.flag === "fail") {
-        statusEl.textContent = "❌ FAIL";
-        statusEl.className = "mb-4 text-lg font-semibold text-red-400";
-        } else {
-        statusEl.textContent = "⚠️ Unknown";
-        statusEl.className = "mb-4 text-lg font-semibold text-yellow-400";
-        }
-        statusEl.classList.remove("hidden");
-    
+    data = await res.json();
+
+    if (res.status !== 200) {
+      throw new Error(data.error_message || "Unexpected backend error");
+    }
+
+    // ✅ Successful result
+    if (data.flag === "pass") {
+      statusEl.textContent = "✅ PASS";
+      statusEl.className = "mb-4 text-lg font-semibold text-green-400";
+    } else if (data.flag === "fail") {
+      statusEl.textContent = "❌ FAIL";
+      statusEl.className = "mb-4 text-lg font-semibold text-red-400";
+    } else {
+      statusEl.textContent = "⚠️ Unknown";
+      statusEl.className = "mb-4 text-lg font-semibold text-yellow-400";
+    }
+    statusEl.classList.remove("hidden");
+
+    // Build failure table
     const failedFields = [];
     const fields = data.comparable_fields || {};
     for (const [field, values] of Object.entries(fields)) {
-        if (values.is_within_tolerance === false) {
-            failedFields.push({
-            field,
-            csv: values.csv_value,
-            image: values.image_value,
-            diff: values.diff
-            });
-        }
-        }
-    // Populate fail table
-    const tableBody = document.getElementById("failTableBody");
-    
-    tableBody.innerHTML = ""; // Clear previous rows
-    if (failedFields.length > 0) {
-        failedFields.forEach(row => {
-            const displayName = row.field.length > 30
-                ? "…" + row.field.slice(-30)
-                : row.field;
-
-            tableBody.innerHTML += `
-            <tr class="border-t border-white/10">
-                <td class="px-4 py-2" title="${row.field}">${displayName}</td>
-                <td class="px-4 py-2">${row.csv}</td>
-                <td class="px-4 py-2">${row.image}</td>
-                <td class="px-4 py-2 text-red-400 font-semibold">${row.diff}</td>
-            </tr>`;
+      if (values.is_within_tolerance === false) {
+        failedFields.push({
+          field,
+          csv: values.csv_value,
+          image: values.image_value,
+          diff: values.diff
         });
-    } else {
-        tableBody.innerHTML = `<tr><td class="px-4 py-2 text-green-400" colspan="4">🎉 No failures found</td></tr>`;
+      }
     }
-    // document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+
+    const tableBody = document.getElementById("failTableBody");
+    tableBody.innerHTML = "";
+    if (failedFields.length > 0) {
+      failedFields.forEach(row => {
+        const displayName = row.field.length > 30
+          ? "…" + row.field.slice(-30)
+          : row.field;
+
+        tableBody.innerHTML += `
+          <tr class="border-t border-white/10">
+            <td class="px-4 py-2" title="${row.field}">${displayName}</td>
+            <td class="px-4 py-2">${row.csv}</td>
+            <td class="px-4 py-2">${row.image}</td>
+            <td class="px-4 py-2 text-red-400 font-semibold">${row.diff}</td>
+          </tr>`;
+      });
+    } else {
+      tableBody.innerHTML = `<tr><td class="px-4 py-2 text-green-400" colspan="4">🎉 No failures found</td></tr>`;
+    }
+
     const resultEl = document.getElementById("result");
     const highlighted = JSON.stringify(data, null, 2).replace(
-    /"is_within_tolerance": false/g,
-    '"is_within_tolerance": <span class="text-red-400 font-semibold">false</span>'
+      /"is_within_tolerance": false/g,
+      '"is_within_tolerance": <span class="text-red-400 font-semibold">false</span>'
     );
-    // Generate downloadable blob
+    resultEl.innerHTML = highlighted;
+
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.getElementById("downloadLink");
     link.href = url;
     link.classList.remove("hidden");
 
-    resultEl.innerHTML = highlighted;
     document.getElementById("loadingSpinner").classList.add("hidden");
     document.getElementById("resultContainer").classList.remove("hidden");
-    });
+
+  } catch (err) {
+  console.error("❌ Backend error:", err);
+
+  // Clear any prior stale results
+  document.getElementById("statusBadge").classList.add("hidden");
+  document.getElementById("failTableBody").innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+  document.getElementById("downloadLink").classList.add("hidden");
+
+  // Hide spinner, keep result container hidden
+  document.getElementById("loadingSpinner").classList.add("hidden");
+
+  alert("❌ Comparison failed. Check terminal/logs.");
+}
+});
 
   </script>
 

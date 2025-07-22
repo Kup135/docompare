@@ -1,4 +1,4 @@
-clearCache: true
+clearCache: false
 data_dir: data/1
 output_subdir: results
 pass_criteria: all_fields_within_tolerance
